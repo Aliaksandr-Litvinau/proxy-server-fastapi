@@ -29,10 +29,7 @@ async def proxy(path: str):
 
     except httpx.RequestError as exc:
         logger.error(f"Request error: {str(exc)}")
-        raise HTTPException(status_code=502, detail="Bad Gateway") from exc
-
-    logger.error(f"Unknown error occurred")
-    raise HTTPException(status_code=500, detail="Unknown error")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
 @app.exception_handler(HTTPException)
