@@ -4,7 +4,7 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from starlette.responses import JSONResponse
 
-from utils.logger import logger
+from proxy.utils.logger import logger
 from settings import settings
 
 app = FastAPI()
