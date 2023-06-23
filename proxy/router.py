@@ -1,5 +1,7 @@
 import logging
 import re
+from itertools import chain
+
 from fastapi import FastAPI, HTTPException
 import httpx
 from starlette.responses import JSONResponse
@@ -17,6 +19,10 @@ logger.addHandler(handler)
 
 app = FastAPI()
 
+STATUS_200_LIST = range(200, 300)
+STATUS_300_LIST = range(300, 400)
+STATUS_OK_LIST = list(chain(STATUS_200_LIST, STATUS_300_LIST))
+
 
 @app.get("/{path:path}")
 async def proxy(path: str):
@@ -26,7 +32,7 @@ async def proxy(path: str):
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
 
-            if response.status_code == 200:
+            if response.status_code in STATUS_OK_LIST:
                 modified_content = re.sub(r"Black(\s*<[^>]+>)?\s*Russia", "BlackHub Games", response.text,
                                           flags=re.IGNORECASE)
                 return modified_content
