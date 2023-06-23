@@ -12,6 +12,7 @@ python-decouple = "==3.8"
 pytest = "==7.4.0"
 
 [dev-packages]
+requests = "=="
 
 [requires]
 python_version = "3.9"
