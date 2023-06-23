@@ -15,6 +15,7 @@ async def proxy(path: str):
     url = f"{settings.base_url}/{path}"
 
     try:
+        logger.debug("Sending request to %s", url)  # record the log before sending the request
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
 
@@ -36,6 +37,7 @@ async def proxy(path: str):
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
+    logger.error(f"HTTPException: {exc.status_code} - {exc.detail}")
     return JSONResponse(status_code=exc.status_code, content={"error": exc.detail})
 
 
