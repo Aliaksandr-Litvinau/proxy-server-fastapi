@@ -18,7 +18,7 @@ async def proxy(path: str):
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
 
-            if response.status_code in settings.status_ok_list:
+            if 200 <= response.status_code < 400:
                 modified_content = re.sub(r"Black(\s*<[^>]+>)?\s*Russia", "BlackHub Games", response.text,
                                           flags=re.IGNORECASE)
                 return modified_content
